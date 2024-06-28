@@ -18,7 +18,7 @@
             </div>
 
             <div class="column is-4 mb-4 box">
-                <h1 class="title">Client</h1>
+                <h1 class="title">{{ invoice.client_name }}</h1>
 
                 <p><strong>{{ invoice.client_contact_name }}</strong></p>
                 <p v-if="invoice.client_email">{{ invoice.client_email }}</p>
@@ -117,7 +117,7 @@ export default {
                 .get(`/api/v1/factures/${invoiceId}/generate_pdf/`, {
                     responseType: 'blob',
                 }).then(res => {
-                    fileDownload(res.data, `${this.invoice.invoice_number}.pdf`)
+                    fileDownload(res.data, `${this.invoice.invoice_number}-${this.invoice.client_name}.pdf`)
                 }).catch(err => {
                     console.log(JSON.stringify(err))
                 })

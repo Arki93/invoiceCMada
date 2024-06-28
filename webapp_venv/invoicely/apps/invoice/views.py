@@ -50,7 +50,8 @@ def generate_pdf(request, invoice_id):
     team = Team.objects.filter(created_by=request.user).first()
     template = get_template('pdf.html')
     html = template.render({'invoice': invoice, 'team': team})
-    pdf = pdfkit.from_string(html, False, options={})
+    config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+    pdf = pdfkit.from_string(html, False, options={}, configuration=config)
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
